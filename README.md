@@ -1,10 +1,10 @@
 # Young Bull Picks - NBA PrizePicks Analysis Tool
 
-A data-driven approach to analyzing NBA player prop betting lines using historical performance data, opponent matchups, and statistical modeling.
+A data-driven approach to analyzing NBA player prop betting lines for the **2024-2025 NBA season** using historical performance data, opponent matchups, and statistical modeling.
 
 ## Project Overview
 
-This project applies data science techniques to evaluate PrizePicks betting lines for NBA players. By combining multiple data sources and weighted factors, the model generates recommendations with confidence scores to help identify high-value betting opportunities.
+This project applies data science techniques to evaluate PrizePicks betting lines for NBA players during the 2024-25 season. By combining multiple data sources and weighted factors, the model generates recommendations with confidence scores to help identify high-value betting opportunities.
 
 ---
 
@@ -17,7 +17,7 @@ The project aggregates data from multiple sources:
 | Source | Description | Records |
 |--------|-------------|---------|
 | [NBA Box Scores 2010-2024](https://github.com/NocturneBear/NBA-Data-2010-2024) | Historical game-by-game player statistics | ~140,000 games |
-| [NBA Player Stats 2024-25](https://www.kaggle.com/datasets/eduardopalmieri/nba-player-stats-season-2425) | Current season box scores (updated regularly) | ~11,000+ games |
+| [NBA Player Stats 2024-25](https://www.kaggle.com/datasets/eduardopalmieri/nba-player-stats-season-2425) | Current 2024-25 season box scores (updated regularly) | ~11,000+ games |
 | Position Data CSVs | Player position classifications (PG, SG, SF, PF, C) | 550+ players |
 
 ### 2. Data Cleaning & Preprocessing
@@ -179,25 +179,6 @@ best_picks = find_best_picks('PTS', min_games=20, min_hit_rate=70)
 | `full_report()` | Complete analysis with visualizations |
 | `analyze_multiple_picks()` | Batch analysis for multiple props |
 | `find_best_picks()` | Discover high-value plays automatically |
-
----
-
-## Limitations & Future Work
-
-### Current Limitations
-- No injury data integration
-- No back-to-back game detection
-- No home/away splits
-- No pace-of-play adjustments
-- Data freshness depends on Kaggle dataset updates
-
-### Potential Enhancements
-- [ ] Integrate real-time injury reports via API
-- [ ] Add home/away performance splits
-- [ ] Include team pace factors
-- [ ] Add rest days analysis
-- [ ] Build backtesting framework to validate model accuracy
-- [ ] Create web dashboard for easier access
 
 ---
 
