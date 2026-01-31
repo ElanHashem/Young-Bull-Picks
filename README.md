@@ -118,16 +118,74 @@ The tool generates two key visualizations per player:
 1. **Time Series Plot:** Performance over time with line overlay, showing games above (green) and below (red) the betting line
 2. **Distribution Histogram:** Frequency distribution of stat with line and average markers
 
+### 7. Model Validation (Backtesting)
+
+**Module:** `backtester.py` | **Notebook:** `Backtest_Analysis.ipynb`
+
+The model's predictive accuracy was validated using a rigorous backtesting methodology:
+
+#### Methodology
+```
+Full Season Data → Split at Midpoint → Train on First Half → Predict Second Half → Compare to Actuals
+```
+
+- **Training Data:** First half of 2024-25 season (Oct 22 - Dec 15, 2024) - 8,125 games
+- **Testing Data:** Second half of season (Dec 15, 2024 - Feb 7, 2025) - 8,387 games
+- **Predictions Generated:** 200 balanced OVER/UNDER predictions across all stat categories
+
+#### Backtest Results
+
+| Metric | Result |
+|--------|--------|
+| **Overall Accuracy** | **72.3%** |
+| **High Confidence (>=60%)** | **83.1%** (49/59 correct) |
+| **Medium Confidence (45-59%)** | 67.4% (87/129 correct) |
+| **OVER Predictions** | 71.8% |
+| **UNDER Predictions** | 72.7% |
+
+#### Accuracy by Stat Category
+
+| Stat | Accuracy | Sample Size |
+|------|----------|-------------|
+| AST | **81.8%** | 44 |
+| STL+BLK | **79.5%** | 44 |
+| 3P | **79.2%** | 24 |
+| TRB | 71.4% | 28 |
+| PTS+REB+AST | 57.1% | 28 |
+| PTS | 50.0% | 20 |
+
+#### Key Findings
+
+- **Profitable Edge:** 72.3% accuracy far exceeds the 52.4% break-even threshold for standard -110 odds
+- **High-Confidence Advantage:** Predictions with >=60% confidence hit at 83.1%
+- **Best Categories:** AST, STL+BLK, and 3P predictions show highest reliability
+- **Balanced Performance:** Both OVER and UNDER predictions perform similarly well
+
+#### Running the Backtest
+
+```python
+from backtester import PredictionBacktester
+
+# Initialize and run backtest
+backtester = PredictionBacktester()
+results = backtester.run_backtest(n_predictions=200)
+
+# Results saved to backtest_results.csv
+```
+
 ---
 
 ## Project Structure
 
 ```
 Young-Bull-Picks/
-├── NBA_PrizePicks.ipynb    # Data cleaning & preprocessing
-├── Picks_Report.ipynb      # Analysis & recommendation engine
-├── position_data.csv       # Processed player-position mappings
-└── README.md               # Project documentation
+├── NBA_PrizePicks.ipynb      # Data cleaning & preprocessing
+├── Picks_Report.ipynb        # Analysis & recommendation engine
+├── Backtest_Analysis.ipynb   # Interactive backtest visualization
+├── backtester.py             # Backtesting module for model validation
+├── position_data.csv         # Processed player-position mappings
+├── backtest_results.csv      # Detailed backtest prediction results
+└── README.md                 # Project documentation
 ```
 
 ---
@@ -168,6 +226,8 @@ best_picks = find_best_picks('PTS', min_games=20, min_hit_rate=70)
 
 ## Key Functions
 
+### Analysis Functions (`Picks_Report.ipynb`)
+
 | Function | Purpose |
 |----------|---------|
 | `analyze_line()` | Calculate hit rates and basic stats for a line |
@@ -179,6 +239,16 @@ best_picks = find_best_picks('PTS', min_games=20, min_hit_rate=70)
 | `full_report()` | Complete analysis with visualizations |
 | `analyze_multiple_picks()` | Batch analysis for multiple props |
 | `find_best_picks()` | Discover high-value plays automatically |
+
+### Backtesting Functions (`backtester.py`)
+
+| Function | Purpose |
+|----------|---------|
+| `PredictionBacktester()` | Initialize backtester with data loading and splitting |
+| `run_backtest()` | Execute full backtest pipeline with N predictions |
+| `generate_test_predictions()` | Generate predictions using training data only |
+| `evaluate_predictions()` | Calculate accuracy metrics and breakdowns |
+| `print_results()` | Display formatted backtest results summary |
 
 ---
 
